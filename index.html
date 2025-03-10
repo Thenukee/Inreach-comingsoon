@@ -1,460 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-P52L2MBD');</script>
-  <!-- End Google Tag Manager -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Something Big Is Coming!</title>
-  <!-- Add favicon using logo.png -->
-  <link rel="icon" href="./assets/logo.png" type="image/png">
-  
-
-  <!-- Use Google Fonts: Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* ---------- GLOBAL STYLES ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #111;
-      color: #fff;
-      min-height: 100vh;
-    }
-    .container {
-      text-align: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      position: relative;
-      z-index: 2; /* above stars */
-    }
-
-    /* ---------- STAR BACKGROUND ---------- */
-    .stars {
-      position: fixed; 
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      z-index: 1;
-      /* Apply a subtle hit (pulse) effect on load */
-      animation: hitEffect 1s ease-out forwards;
-    }
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      opacity: 0.8;
-      animation: travelStars linear infinite;
-    }
-    @keyframes travelStars {
-      from {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh) scale(2);
-        opacity: 0;
-      }
-    }
-    /* Keyframes for the initial hit (pulse) effect */
-    @keyframes hitEffect {
-      0% { filter: brightness(1); }
-      50% { filter: brightness(1.3); }
-      100% { filter: brightness(1); }
-    }
-    /* Keyframes for the star collision (blur) effect */
-    @keyframes starCollision {
-      0% { filter: blur(0px); opacity: 1; }
-      50% { filter: blur(8px); opacity: 0.6; }
-      100% { filter: blur(0px); opacity: 1; }
-    }
-    /* When the collision effect is triggered */
-    .stars.collision {
-      animation: starCollision 0.5s ease-out !important;
-    }
-
-    /* ---------- PAGE TEXT ---------- */
-    h1 {
-      font-size: 3rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-weight: 700;
-      margin-top: 40px;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      font-weight: 400;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ---------- TIME COUNT DESIGN ---------- */
-    .time-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 50px; /* Increased bottom gap before the cube */
-    }
-    .time-box {
-      background: #222;
-      padding: 10px;
-      border: 2px solid #c8a577;
-      border-radius: 5px;
-      width: 80px;
-      text-align: center;
-    }
-    .time-value {
-      font-size: 1.5rem;
-      font-weight: bold;
-      display: block;
-    }
-    .time-label {
-      font-size: 1rem;
-      margin-top: 5px;
-      color: #ccc;
-      display: block;
-    }
-
-    /* ---------- SECRET TEXT ---------- */
-    .secret-text {
-      display: none;
-      font-size: 1.5rem;
-      margin-top: 120px;  /* Increased gap between the cube and this text */
-      font-weight: 300;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-    .secret-text.show {
-      display: block;
-      opacity: 1;
-    }
-
-    /* ---------- 3D BOX (Perfect Cube) ---------- */
-    .box-container {
-      margin: 100px auto;  /* Increased top & bottom margin around the box */
-      perspective: 800px; 
-      cursor: pointer; /* Indicate it's clickable */
-    }
-    .box {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto;
-      position: relative;
-      transform-style: preserve-3d;
-      transform: rotateX(-20deg) rotateY(25deg);
-      transition: transform 0.2s linear, opacity 1s ease;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-    .face {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      background: #c8a577;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-    }
-    /* Each face is translated half the box’s depth (75px for 150px width) */
-    .front  { transform: rotateY(0deg)   translateZ(75px); }
-    .back   { transform: rotateY(180deg) translateZ(75px); }
-    .left   { transform: rotateY(-90deg) translateZ(75px); }
-    .right  { transform: rotateY(90deg)  translateZ(75px); }
-    .top    { transform: rotateX(90deg)  translateZ(75px); }
-    .bottom { transform: rotateX(-90deg) translateZ(75px); }
-
-    /* Content for each face */
-    .face-content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .face-content .line {
-      display: block;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    /* Fade-out class to make the box disappear */
-    .box.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* ---------- LOGO WITH SUBTLE NEON YELLOW SHADOW ---------- */
-    .logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* Removed extra margin to ensure proper centering */
-    transform: translate(-50%, -50%) scale(0.01);
-    width: 200px;
-    height: 200px;
-    opacity: 0;
-    transition: transform 1s ease, opacity 1s ease;
-    z-index: 999;
-  }
-  .logo.glow {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    animation: glowing 1.5s infinite ease-in-out;
-  }
-
-  @keyframes glowing {
-    0% {
-      filter: drop-shadow(0 0 5px #ffea00) drop-shadow(0 0 10px #ffea00);
-    }
-    50% {
-      filter: drop-shadow(0 0 20px #ffea00) drop-shadow(0 0 30px #ffea00);
-    }
-    100% {
-      filter: drop-shadow(0 0 5px #ffea00) drop-shadow(0 0 10px #ffea00);
-    }
-  }
-
-    /* ---------- MEDIA QUERIES ---------- */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-        margin-top: 30px;
-      }
-      p {
-        font-size: 1rem;
-      }
-      /* Adjust the time boxes so the text fits inside */
-      .time-box {
-        width: 70px;
-        padding: 8px;
-      }
-      .time-value {
-        font-size: 1.2rem;
-      }
-      .time-label {
-        font-size: 0.8rem;
-      }
-      .face-content .line {
-        font-size: 1.5rem;
-      }
-      .box {
-        width: 120px;
-        height: 120px;
-      }
-      .face {
-        width: 120px;
-        height: 120px;
-      }
-      /* Recalculate translation since half of 120 is 60px */
-      .front  { transform: rotateY(0deg)   translateZ(60px); }
-      .back   { transform: rotateY(180deg) translateZ(60px); }
-      .left   { transform: rotateY(-90deg) translateZ(60px); }
-      .right  { transform: rotateY(90deg)  translateZ(60px); }
-      .top    { transform: rotateX(90deg)  translateZ(60px); }
-      .bottom { transform: rotateX(-90deg) translateZ(60px); }
-      .secret-text {
-        margin-top: 100px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Are Hiring - Software Engineers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .stars {
+            position: fixed; 
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            opacity: 0.8;
+            animation: travelStars linear infinite;
+        }
+        @keyframes travelStars {
+            from {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) scale(2);
+                opacity: 0;
+            }
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.1s ease-in-out;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            animation: glow 1.5s infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff7b00;
+            }
+            to {
+                text-shadow: 0 0 20px #ff4500;
+            }
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            color: white;
+            background: #ff7b00;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #ff4500;
+        }
+        .btn:hover ~ .container {
+            animation: shake 0.1s infinite alternate;
+        }
+        @keyframes shake {
+            0% { transform: translateX(-3px); }
+            100% { transform: translateX(3px); }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P52L2MBD"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  
-  <!-- Star background -->
-  <div class="stars" id="stars"></div>
-
-  <div class="container">
-    <h1>Something Big Is Coming!</h1>
-    <p>We're working on something extraordinary. Stay tuned!</p>
-
-    <!-- Time Container with Matching Boxes -->
-    <div class="time-container" id="timeContainer">
-      <div class="time-box">
-        <span class="time-value" id="days">0</span>
-        <span class="time-label">Days</span>
-      </div>
-      <div class="time-box">
-        <span class="time-value" id="hours">0</span>
-        <span class="time-label">Hours</span>
-      </div>
-      <div class="time-box">
-        <span class="time-value" id="minutes">0</span>
-        <span class="time-label">Minutes</span>
-      </div>
-      <div class="time-box">
-        <span class="time-value" id="seconds">0</span>
-        <span class="time-label">Seconds</span>
-      </div>
+    <div class="stars" id="stars"></div>
+    <div class="container" id="container">
+        <h1>We Are Hiring!</h1>
+        <p>Join our team of passionate software engineers and build amazing things with us.</p>
+        <a href="YOUR_GOOGLE_FORM_LINK" class="btn" id="applyBtn">Apply Now</a>
     </div>
-
-    <!-- 3D Box -->
-    <div class="box-container" id="boxContainer">
-      <div class="box" id="box">
-        <!-- Front Face -->
-        <div class="face front">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-        <!-- Back Face -->
-        <div class="face back">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-        <!-- Left Face -->
-        <div class="face left">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-        <!-- Right Face -->
-        <div class="face right">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-        <!-- Top Face -->
-        <div class="face top">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-        <!-- Bottom Face -->
-        <div class="face bottom">
-          <div class="face-content">
-            <span class="line">COMING</span>
-            <span class="line">SOON</span>
-          </div>
-        </div>
-      </div>
-      <!-- Logo (hidden initially) -->
-      <img src="./assets/logo.png" alt="Logo" class="logo" id="logo" />
-    </div>
-
-    <!-- Secret text that appears on box click (if desired) -->
-    <p class="secret-text" id="secret-text">Not yet! Patience is key. 😉</p>
-  </div>
-
-  <script>
-    /* ---------- STAR BACKGROUND GENERATOR ---------- */
-    function generateStars() {
-      const starsContainer = document.getElementById('stars');
-      if (!starsContainer) return;
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.left = Math.random() * 100 + "vw";
-        star.style.top = Math.random() * 100 + "vh";
-        star.style.animationDuration = (Math.random() * 3 + 2) + "s";
-        starsContainer.appendChild(star);
-      }
-    }
-    generateStars();
-
-    /* ---------- COUNTDOWN TIMER (Updating Each Time Box) ---------- */
-    function countdownTimer() {
-      const launchDate = new Date('2025-02-25T00:00:00').getTime();
-      setInterval(() => {
-        const now = new Date().getTime();
-        const timeLeft = launchDate - now;
-        if (timeLeft <= 0) {
-          document.getElementById('days').textContent = '0';
-          document.getElementById('hours').textContent = '0';
-          document.getElementById('minutes').textContent = '0';
-          document.getElementById('seconds').textContent = '0';
-        } else {
-          const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-          document.getElementById('days').textContent = days;
-          document.getElementById('hours').textContent = hours;
-          document.getElementById('minutes').textContent = minutes;
-          document.getElementById('seconds').textContent = seconds;
+    <script>
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            if (!starsContainer) return;
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.top = Math.random() * 100 + "vh";
+                star.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                starsContainer.appendChild(star);
+            }
         }
-      }, 1000);
-    }
-    countdownTimer();
+        generateStars();
 
-    /* ---------- BOX INTERACTION ---------- */
-    const boxContainer = document.getElementById('boxContainer');
-    const box = document.getElementById('box');
-    const logo = document.getElementById('logo');
-    const secretText = document.getElementById('secret-text');
-    const stars = document.getElementById('stars');
-
-    // Rotate the box with mouse movement
-    boxContainer.addEventListener('mousemove', (e) => {
-      const rect = boxContainer.getBoundingClientRect();
-      const xCenter = rect.width / 2;
-      const yCenter = rect.height / 2;
-      const xPos = e.clientX - rect.left;
-      const yPos = e.clientY - rect.top;
-      const rotateY = ((xPos - xCenter) / rect.width) * 40;
-      const rotateX = -((yPos - yCenter) / rect.height) * 40;
-      box.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-
-    // Reset orientation on mouse leave
-    boxContainer.addEventListener('mouseleave', () => {
-      box.style.transform = 'rotateX(-20deg) rotateY(25deg)';
-    });
-
-    // For touch devices: allow rotation via touchmove (without resetting on touchend)
-    boxContainer.addEventListener('touchmove', (e) => {
-      e.preventDefault(); // Prevent scrolling while interacting with the box
-      const touch = e.touches[0];
-      const rect = boxContainer.getBoundingClientRect();
-      const xCenter = rect.width / 2;
-      const yCenter = rect.height / 2;
-      const xPos = touch.clientX - rect.left;
-      const yPos = touch.clientY - rect.top;
-      const rotateY = ((xPos - xCenter) / rect.width) * 40;
-      const rotateX = -((yPos - yCenter) / rect.height) * 40;
-      box.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    }, { passive: false });
-    
-    // On click: fade out the box, speed up stars, trigger star collision, and show the logo with neon glow
-    boxContainer.addEventListener('click', () => {
-      box.classList.add('fade-out');
-      document.querySelectorAll('.star').forEach(star => {
-        star.style.animationDuration = '0.2s';
-      });
-      stars.classList.add('collision');
-      setTimeout(() => {
-        stars.classList.remove('collision');
-      }, 500);
-      logo.classList.add('glow');
-      secretText.classList.add('show');
-    });
-  </script>
+        // Shake the container when hovering over the apply button
+        document.getElementById('applyBtn').addEventListener('mouseover', function() {
+            document.getElementById('container').style.animation = 'shake 0.1s infinite alternate';
+        });
+        document.getElementById('applyBtn').addEventListener('mouseout', function() {
+            document.getElementById('container').style.animation = '';
+        });
+    </script>
 </body>
 </html>
